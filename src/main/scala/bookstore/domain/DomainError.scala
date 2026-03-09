@@ -1,6 +1,5 @@
 package bookstore.domain
 
-
 sealed trait DomainError extends Product with Serializable
 
 object DomainError:

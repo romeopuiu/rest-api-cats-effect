@@ -1,4 +1,4 @@
-import bookstore.config.Database
+import bookstore.config.{Database, ServerConfig}
 import bookstore.repository.DoobieBookRepository
 import bookstore.routes.BookRoutes
 import bookstore.service.LiveBookService
@@ -6,15 +6,13 @@ import cats.effect.{ExitCode, IOApp}
 import cats.effect.IO
 import org.http4s.ember.server.EmberServerBuilder
 import org.http4s.server.Router
-import com.comcast.ip4s.host
-import com.comcast.ip4s.port
 
 object BookApplication extends IOApp:
 
   def run(args: List[String]): IO[ExitCode] =
-    Database.transactor[IO].use { xa =>
+    Database.transactor[IO].use { transactor =>
 
-      val repository = DoobieBookRepository[IO](xa)
+      val repository = DoobieBookRepository[IO](transactor)
       val service = LiveBookService[IO](repository)
       val httpApp = Router(
         "api/books" -> BookRoutes[IO](service).routes
@@ -22,8 +20,8 @@ object BookApplication extends IOApp:
 
       EmberServerBuilder
         .default[IO]
-        .withHost(host"0.0.0.0")
-        .withPort(port"8080")
+        .withHost(ServerConfig.Host)
+        .withPort(ServerConfig.Port)
         .withHttpApp(httpApp)
         .build
         .use(_ => IO.never)

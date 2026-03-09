@@ -6,7 +6,6 @@ import io.circe.Decoder
 import io.circe.generic.semiauto.deriveDecoder
 import io.circe.generic.semiauto.deriveEncoder
 
-
 final case class BookId(value: Long) extends AnyVal
 
 object BookId:
