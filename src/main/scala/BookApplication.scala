@@ -1,4 +1,4 @@
-import bookstore.config.{Database, ServerConfig}
+import bookstore.config.{DatabaseConfig, ServerConfig}
 import bookstore.repository.DoobieBookRepository
 import bookstore.routes.BookRoutes
 import bookstore.service.LiveBookService
@@ -10,7 +10,7 @@ import org.http4s.server.Router
 object BookApplication extends IOApp:
 
   def run(args: List[String]): IO[ExitCode] =
-    Database.transactor[IO].use { transactor =>
+    DatabaseConfig.transactor[IO].use { transactor =>
 
       val repository = DoobieBookRepository[IO](transactor)
       val service = LiveBookService[IO](repository)

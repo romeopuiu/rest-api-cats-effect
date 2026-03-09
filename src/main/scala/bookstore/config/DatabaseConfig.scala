@@ -4,7 +4,7 @@ import cats.effect.{Async, Resource}
 import com.zaxxer.hikari.HikariConfig
 import doobie.hikari.HikariTransactor
 
-object Database:
+object DatabaseConfig:
 
   def transactor[F[_] : Async]: Resource[F, HikariTransactor[F]] =
     for
