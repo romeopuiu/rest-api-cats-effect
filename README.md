@@ -1,6 +1,6 @@
 # REST API with Cats Effect
 
-A purely functional CRUD REST API built with Scala 3 and the Typelevel ecosystem.  
+CRUD REST API built with Scala 3 and the Typelevel ecosystem.  
 ---
 ## 🛠 Technologies Used
 
